@@ -10,33 +10,158 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as CronogramaRouteImport } from './routes/cronograma'
+import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
+import { Route as AuthenticatedHistorialRouteImport } from './routes/_authenticated/historial'
+import { Route as AuthenticatedMiHorarioRouteImport } from './routes/_authenticated/mi-horario'
+import { Route as AuthenticatedPerfilRouteImport } from './routes/_authenticated/perfil'
+import { Route as EventosIdRouteImport } from './routes/eventos.$id'
+import { Route as AuthenticatedMisEventosIndexRouteImport } from './routes/_authenticated/mis-eventos.index'
+import { Route as AuthenticatedMisEventosNuevoRouteImport } from './routes/_authenticated/mis-eventos.nuevo'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CronogramaRoute = CronogramaRouteImport.update({
+  id: '/cronograma',
+  path: '/cronograma',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedHistorialRoute = AuthenticatedHistorialRouteImport.update({
+  id: '/historial',
+  path: '/historial',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedMiHorarioRoute = AuthenticatedMiHorarioRouteImport.update({
+  id: '/mi-horario',
+  path: '/mi-horario',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedPerfilRoute = AuthenticatedPerfilRouteImport.update({
+  id: '/perfil',
+  path: '/perfil',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const EventosIdRoute = EventosIdRouteImport.update({
+  id: '/eventos/$id',
+  path: '/eventos/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedMisEventosIndexRoute =
+  AuthenticatedMisEventosIndexRouteImport.update({
+    id: '/mis-eventos/',
+    path: '/mis-eventos/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedMisEventosNuevoRoute =
+  AuthenticatedMisEventosNuevoRouteImport.update({
+    id: '/mis-eventos/nuevo',
+    path: '/mis-eventos/nuevo',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/cronograma': typeof CronogramaRoute
+  '/admin': typeof AuthenticatedAdminRoute
+  '/historial': typeof AuthenticatedHistorialRoute
+  '/mi-horario': typeof AuthenticatedMiHorarioRoute
+  '/perfil': typeof AuthenticatedPerfilRoute
+  '/eventos/$id': typeof EventosIdRoute
+  '/mis-eventos/nuevo': typeof AuthenticatedMisEventosNuevoRoute
+  '/mis-eventos/': typeof AuthenticatedMisEventosIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/cronograma': typeof CronogramaRoute
+  '/admin': typeof AuthenticatedAdminRoute
+  '/historial': typeof AuthenticatedHistorialRoute
+  '/mi-horario': typeof AuthenticatedMiHorarioRoute
+  '/perfil': typeof AuthenticatedPerfilRoute
+  '/eventos/$id': typeof EventosIdRoute
+  '/mis-eventos/nuevo': typeof AuthenticatedMisEventosNuevoRoute
+  '/mis-eventos': typeof AuthenticatedMisEventosIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/auth': typeof AuthRoute
+  '/cronograma': typeof CronogramaRoute
+  '/_authenticated/admin': typeof AuthenticatedAdminRoute
+  '/_authenticated/historial': typeof AuthenticatedHistorialRoute
+  '/_authenticated/mi-horario': typeof AuthenticatedMiHorarioRoute
+  '/_authenticated/perfil': typeof AuthenticatedPerfilRoute
+  '/eventos/$id': typeof EventosIdRoute
+  '/_authenticated/mis-eventos/nuevo': typeof AuthenticatedMisEventosNuevoRoute
+  '/_authenticated/mis-eventos/': typeof AuthenticatedMisEventosIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/cronograma'
+    | '/admin'
+    | '/historial'
+    | '/mi-horario'
+    | '/perfil'
+    | '/eventos/$id'
+    | '/mis-eventos/nuevo'
+    | '/mis-eventos/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/auth'
+    | '/cronograma'
+    | '/admin'
+    | '/historial'
+    | '/mi-horario'
+    | '/perfil'
+    | '/eventos/$id'
+    | '/mis-eventos/nuevo'
+    | '/mis-eventos'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/auth'
+    | '/cronograma'
+    | '/_authenticated/admin'
+    | '/_authenticated/historial'
+    | '/_authenticated/mi-horario'
+    | '/_authenticated/perfil'
+    | '/eventos/$id'
+    | '/_authenticated/mis-eventos/nuevo'
+    | '/_authenticated/mis-eventos/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AuthRoute: typeof AuthRoute
+  CronogramaRoute: typeof CronogramaRoute
+  EventosIdRoute: typeof EventosIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +173,106 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cronograma': {
+      id: '/cronograma'
+      path: '/cronograma'
+      fullPath: '/cronograma'
+      preLoaderRoute: typeof CronogramaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/admin': {
+      id: '/_authenticated/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AuthenticatedAdminRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/historial': {
+      id: '/_authenticated/historial'
+      path: '/historial'
+      fullPath: '/historial'
+      preLoaderRoute: typeof AuthenticatedHistorialRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/mi-horario': {
+      id: '/_authenticated/mi-horario'
+      path: '/mi-horario'
+      fullPath: '/mi-horario'
+      preLoaderRoute: typeof AuthenticatedMiHorarioRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/perfil': {
+      id: '/_authenticated/perfil'
+      path: '/perfil'
+      fullPath: '/perfil'
+      preLoaderRoute: typeof AuthenticatedPerfilRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/eventos/$id': {
+      id: '/eventos/$id'
+      path: '/eventos/$id'
+      fullPath: '/eventos/$id'
+      preLoaderRoute: typeof EventosIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/mis-eventos/': {
+      id: '/_authenticated/mis-eventos/'
+      path: '/mis-eventos'
+      fullPath: '/mis-eventos/'
+      preLoaderRoute: typeof AuthenticatedMisEventosIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/mis-eventos/nuevo': {
+      id: '/_authenticated/mis-eventos/nuevo'
+      path: '/mis-eventos/nuevo'
+      fullPath: '/mis-eventos/nuevo'
+      preLoaderRoute: typeof AuthenticatedMisEventosNuevoRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
+  AuthenticatedHistorialRoute: typeof AuthenticatedHistorialRoute
+  AuthenticatedMiHorarioRoute: typeof AuthenticatedMiHorarioRoute
+  AuthenticatedPerfilRoute: typeof AuthenticatedPerfilRoute
+  AuthenticatedMisEventosNuevoRoute: typeof AuthenticatedMisEventosNuevoRoute
+  AuthenticatedMisEventosIndexRoute: typeof AuthenticatedMisEventosIndexRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminRoute: AuthenticatedAdminRoute,
+  AuthenticatedHistorialRoute: AuthenticatedHistorialRoute,
+  AuthenticatedMiHorarioRoute: AuthenticatedMiHorarioRoute,
+  AuthenticatedPerfilRoute: AuthenticatedPerfilRoute,
+  AuthenticatedMisEventosNuevoRoute: AuthenticatedMisEventosNuevoRoute,
+  AuthenticatedMisEventosIndexRoute: AuthenticatedMisEventosIndexRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AuthRoute: AuthRoute,
+  CronogramaRoute: CronogramaRoute,
+  EventosIdRoute: EventosIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
